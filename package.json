@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.0",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "mongoose": "^7.0.2",
+    "node-telegram-bot-api": "^0.61.0"
+  },
+  "name": "kree",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
