@@ -6,7 +6,6 @@ mongoose.connect(MongoURL, {
   useUnifiedTopology: true,
 });
 
-// Определяем схему данных для записи сообщений пользователей
 const MessageSchema = new mongoose.Schema({
   chatId: {
     type: Number,
@@ -23,7 +22,6 @@ const MessageSchema = new mongoose.Schema({
   },
 });
 
-// Создаем модель данных на основе схемы
 const MessageModel = mongoose.model('Message', MessageSchema);
 
 
