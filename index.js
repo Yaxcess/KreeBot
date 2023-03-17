@@ -6,9 +6,6 @@ const { Expressions } = require('./regularExpressions');
 const { Commands } = require('./commandsList');
 const { Errors } = require('./errorMessagesList');
 const { Success } = require('./successMessagesList');
-let messageNames = {};
-let result = {};
-let noteName = '';
 
 function startBot() {
   const bot = new TelegramBot(token, { polling: true });
@@ -31,7 +28,7 @@ function startBot() {
     const newNoteMatches = text.match(newNoteRegex);
 
     if (newNoteMatches) {
-      noteName = newNoteMatches[1];
+      const noteName = newNoteMatches[1];
       const userMessage = newNoteMatches[2];
 
       try {
@@ -57,7 +54,7 @@ function startBot() {
     const getNoteMatches = text.match(getNoteRegex);
 
     if (getNoteMatches) {
-      noteName = getNoteMatches[1];
+      const noteName = getNoteMatches[1];
 
       try {
         const message = await MessageModel.findOne({ noteName });
@@ -75,7 +72,7 @@ function startBot() {
     const deleteNoteMatches = text.match(deleteNoteRegex);
 
     if (deleteNoteMatches) {
-      noteName = deleteNoteMatches[1];
+      const noteName = deleteNoteMatches[1];
 
       try {
         const result = await MessageModel.deleteOne({ noteName });
@@ -98,7 +95,7 @@ function startBot() {
 
       if (confirmDelete === 'y') {
         try {
-          result = await MessageModel.deleteMany({});
+          const result = await MessageModel.deleteMany({});
           bot.sendMessage(chatId,
             Success.SuccessfulDeletionAll.replace("$text",
               result.deletedCount));
@@ -111,7 +108,7 @@ function startBot() {
       try {
         const messages = await MessageModel.find({}, 'noteName');
         if (messages.length > 0) {
-          messageNames = messages.map((message) =>
+          const messageNames = messages.map((message) =>
             message.noteName).join(', ');
           bot.sendMessage(chatId,
             Success.AllNamesGettingSuccess + messageNames);
