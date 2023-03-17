@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const MongoURL = require('./MongoLink')
 
-mongoose.connect('', {
+mongoose.connect(MongoURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

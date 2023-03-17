@@ -1,6 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-const mongoose = require('mongoose');
-const token = require('./t').Token;
+const Token = require('./t').Token;
 const MessageModel = require('./MongoDBConnect').MessageModel;
 const { Expressions } = require('./regularExpressions');
 const { Commands } = require('./commandsList');
@@ -8,7 +7,7 @@ const { Errors } = require('./errorMessagesList');
 const { Success } = require('./successMessagesList');
 
 function startBot() {
-  const bot = new TelegramBot(token, { polling: true });
+  const bot = new TelegramBot(Token, { polling: true });
 
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
