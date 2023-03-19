@@ -18,7 +18,7 @@ function startBot() {
     }
     //commands and parameters
     if (text === Commands.commandsCommand.command) {
-      let message = 'Список команд:\n';
+      let message = Success.CommandsList;
       for (const command in Commands) {
         message += `${Commands[command].command} - ${Commands[command].description}\n`;
       }
