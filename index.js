@@ -1,10 +1,10 @@
 const TelegramBot = require('node-telegram-bot-api');
 const Token = require('./t').Token;
 const MessageModel = require('./MongoDBConnect').MessageModel;
-const { Expressions } = require('./regularExpressions');
-const { Commands } = require('./commandsList');
-const { Errors } = require('./errorMessagesList');
-const { Success } = require('./successMessagesList');
+const { Expressions } = require('./consts/regexes/regularExpressions');
+const { Commands } = require('./consts/commands/commandsList');
+const { Errors } = require('./consts/messages/errorMessagesList');
+const { Success } = require('./consts/messages/successMessagesList');
 
 function startBot() {
   const bot = new TelegramBot(Token, { polling: true });
@@ -12,15 +12,17 @@ function startBot() {
   bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
-    if (text === '/start') {
+    //start
+    if (text === Commands.startCommand.command) {
       bot.sendMessage(chatId, Success.StartMessage);
     }
     //commands and parameters
-    if (text === '/commands') {
-      bot.sendMessage(chatId, Commands.startCommand +
-        Commands.commandsCommand + Commands.NewNoteCommand +
-        Commands.GetNoteCommand + Commands.GetAllNamesCommand +
-        Commands.DeleteNoteCommand + Commands.DeleteAllNotesCommand)
+    if (text === Commands.commandsCommand.command) {
+      let message = 'Список команд:\n';
+      for (const command in Commands) {
+        message += `${Commands[command].command} - ${Commands[command].description}\n`;
+      }
+      bot.sendMessage(chatId, message)
     }
     //create
     const newNoteRegex = Expressions.NewNoteExpr;
@@ -103,7 +105,8 @@ function startBot() {
         }
       }
     };
-    if (text === '/GetAllNames') {
+    //getNames
+    if (text === Commands.GetAllNamesCommand.command) {
       try {
         const messages = await MessageModel.find({}, 'noteName');
         if (messages.length > 0) {
