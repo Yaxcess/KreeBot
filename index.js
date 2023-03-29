@@ -20,7 +20,9 @@ function startBot() {
     if (text === Commands.commandsCommand.command) {
       let message = Success.CommandsList;
       for (const command in Commands) {
-        message += `${Commands[command].command} - ${Commands[command].description}\n`;
+        message += Commands[command].command + ' ' +
+          Commands[command].attributes +
+          ' - ' + Commands[command].description + '\n';
       }
       bot.sendMessage(chatId, message)
     }
@@ -34,7 +36,7 @@ function startBot() {
       const userMessage = newNoteMatches[2];
 
       try {
-        const existingMessage = await MessageModel.findOne({ noteName });
+        const existingMessage = await MessageModel.findOne({ chatId, noteName });
         if (existingMessage) {
           bot.sendMessage(chatId, Errors.NoteNameExists);
           return;
@@ -60,7 +62,7 @@ function startBot() {
       const noteName = getNoteMatches[1];
 
       try {
-        const message = await MessageModel.findOne({ noteName });
+        const message = await MessageModel.find({ chatId, noteName });
         if (message) {
           bot.sendMessage(chatId, message.text);
         } else {
@@ -79,7 +81,7 @@ function startBot() {
       const noteName = deleteNoteMatches[1];
 
       try {
-        const result = await MessageModel.deleteOne({ noteName });
+        const result = await MessageModel.deleteOne({ chatId, noteName });
         if (result.deletedCount > 0) {
           bot.sendMessage(chatId,
             Success.SuccessfulDeletionOne.replace("$text", noteName));
@@ -100,7 +102,7 @@ function startBot() {
 
       if (confirmDelete === 'y') {
         try {
-          const result = await MessageModel.deleteMany({});
+          const result = await MessageModel.deleteMany({ chatId });
           bot.sendMessage(chatId,
             Success.SuccessfulDeletionAll.replace("$text",
               result.deletedCount));
@@ -112,7 +114,7 @@ function startBot() {
     //getNames
     if (text === Commands.GetAllNamesCommand.command) {
       try {
-        const messages = await MessageModel.find({}, 'noteName');
+        const messages = await MessageModel.find({ chatId }, 'noteName');
         if (messages.length > 0) {
           const messageNames = messages.map((message) =>
             message.noteName).join(', ');
