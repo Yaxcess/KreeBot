@@ -1,8 +1,7 @@
 const Expressions = {
-    NewNoteExpr: /^\/NewNote\s+([\w-]+)\s+([\s\S]*)$/,
-    GetNoteExpr: /^\/GetNote\s+([\w-]+)$/,
-    DeleteNoteExpr: /^\/DeleteNote\s+([\w-]+)$/,
-    DeleteAllNotesExpr: /^\/DeleteAllNotes\s+(y)$/
+    NewNoteExpr: `^$command\\s+([\\w-]+)\\s+([\\s\\S]*)$`,
+    GetDeleteNoteExpr: `^$command\\s+([\\w-]+)$`,
+    DeleteAllNotesExpr: `^$command\\s+(y)$`
 }
 
 module.exports = {
