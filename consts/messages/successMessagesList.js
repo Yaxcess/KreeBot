@@ -5,7 +5,8 @@ const Success = {
     SuccessfulDeletionAll: 'Удалены все ($text) записи',
     AllNamesGettingSuccess: 'Список имен записей: \n',
     StartMessage: 'Добро пожаловать в KreeNote.\n' +
-    'Для списка команд используйте "/commands"'
+    'Для списка команд используйте "/commands"',
+    CommandsList: 'Список команд:\n'
 };
 
 module.exports = {

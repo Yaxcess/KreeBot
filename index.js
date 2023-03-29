@@ -18,14 +18,15 @@ function startBot() {
     }
     //commands and parameters
     if (text === Commands.commandsCommand.command) {
-      let message = 'Список команд:\n';
+      let message = Success.CommandsList;
       for (const command in Commands) {
         message += `${Commands[command].command} - ${Commands[command].description}\n`;
       }
       bot.sendMessage(chatId, message)
     }
     //create
-    const newNoteRegex = Expressions.NewNoteExpr;
+    const newNoteRegex = Expressions.NewNoteExpr.replace('$command',
+      Commands.NewNoteCommand.command);
     const newNoteMatches = text.match(newNoteRegex);
 
     if (newNoteMatches) {
@@ -51,7 +52,8 @@ function startBot() {
       }
     };
     //get
-    const getNoteRegex = Expressions.GetNoteExpr;
+    const getNoteRegex = Expressions.GetDeleteNoteExpr.replace('$command',
+      Commands.GetNoteCommand.command);
     const getNoteMatches = text.match(getNoteRegex);
 
     if (getNoteMatches) {
@@ -69,7 +71,8 @@ function startBot() {
       }
     };
     //delete
-    const deleteNoteRegex = Expressions.DeleteNoteExpr;
+    const deleteNoteRegex = Expressions.GetDeleteNoteExpr.replace('$command',
+      Commands.DeleteNoteCommand.command);
     const deleteNoteMatches = text.match(deleteNoteRegex);
 
     if (deleteNoteMatches) {
@@ -88,7 +91,8 @@ function startBot() {
       }
     };
     //deleteAll
-    const deleteAllNotesRegex = Expressions.DeleteAllNotesExpr;
+    const deleteAllNotesRegex = Expressions.DeleteAllNotesExpr.replace('$command',
+      Commands.DeleteAllNotesCommand.command);
     const deleteAllNotesMatches = text.match(deleteAllNotesRegex);
 
     if (deleteAllNotesMatches) {
